@@ -19,7 +19,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 # create a handler
-handler = logging.FileHandler('./maxSim.log')
+handler = logging.FileHandler('Image2txt' + '.log')
 handler.setLevel(logging.INFO)
 # create a logging format
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -130,32 +130,52 @@ class picture_ocr(object):
 		return txt
 
 
-if __name__ == '__main__':
-	log.setLevel(logging.DEBUG)
+if __name__  == '__main__':
+	log.setLevel(logging.INFO)
 	#设置两个路径参数
-	Image_dir = '/media/lsz/MYLINUXLIVE/img/'
+	Image_dir = os.path.split(__file__)[0] + '/img/'
+	out = open('./biaoqing.txt', 'a')
+
+	log.debug('oh ? %s', 'checked.info' not  in os.listdir())
+
+	checked_info = open('checked.info', 'a+')
+	checked_info.seek(0)
+	checked_filelist = checked_info.readlines()
+
 	os.chdir(Image_dir)
-	out = open('/home/ree/data/fashion/biaoqing.txt', 'w')
+	count = 0
 	for subdir in os.listdir():
+		if  not os.path.isdir(subdir):
+			continue
 		for filename in os.listdir(subdir):
-			log.debug('filename: %s', subdir + '/' + filename)
+			fulladdress = '/'.join((Image_dir ,subdir ,filename))
+			log.debug('filename: %s', fulladdress)
+			#两种不会继续分析的情况，一种是在checked_info中存在，一种是后缀为.jpg
+			if fulladdress + '\n' in checked_filelist :
+				log.info('%s 已存在', fulladdress)
+				continue
+			else :
+				checked_info.write(fulladdress + '\n')
 			if os.path.splitext(filename)[1] != '.jpg':
 				continue
+
+			#试图对图片做OCR如果ＯＣＲ结果是空字符或者发生错误都放弃OCR
 			try:
 				pic_ocr = picture_ocr(subdir +'/' + filename)
 				txt = pic_ocr.get_crop_txt()
-				log.debug('pre:%s', txt)
-				txt = re.subn('[^\w\u4e00-\u9fa5]+','', txt)[0]
-				log.info("after:%s", txt)
+				log.debug('pre: %s', txt)
+				txt = re.subn(r'[^\w\u4e00-\u9fa5]+','', txt)[0].strip()
+				log.info("after: %s", txt)
 			except AttributeError as e:
 				continue
 			if not txt:
-				txt = ''.join(reversed(pic_ocr.get_txt()))
-				txt = re.subn('[^\w\u4e00-\u9fa5]', '', txt)[0]
-				log.debug('get:%s', txt)
-			if txt == '':
+				log.info('ocr failed %s', '放弃')
 				continue
 			write_string = txt + '#' + Image_dir + subdir + '/' + filename +'\n'
 			log.debug(write_string)
 			out.write(write_string)
+		count += 1
+		if count > 100:
+			break
 	out.close()
+	checked_info.close()

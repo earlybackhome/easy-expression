@@ -17,6 +17,7 @@ tesseract-ocr
 PIL
 matplotlib
 pyqt4
+scipy
 ## 直接测试
 
 1. 下载[链接](https://pan.baidu.com/s/1hs21ZzI)密码: 4fck

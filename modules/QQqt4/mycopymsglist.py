@@ -406,7 +406,7 @@ class ImageItem(QWidget):
 
 class MsgList(QListWidget):
     """消息消息列表的控件，支持增加文字消息和增加图片消息"""
-    def __init__(self, path = os.getcwd(), txt_file='../DL/biaoqing.txt', model_file = '../DL/fash250.model.bin'):
+    def __init__(self, path = os.getcwd(), txt_file='../OCR/biaoqing.txt', model_file = '../DL/fash250.model.bin'):
         self.links = maxSim.link_processor(txt_file, model_file)
         self.path = path
         super(MsgList, self).__init__()

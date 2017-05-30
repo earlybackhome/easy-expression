@@ -44,7 +44,7 @@ class Senten2vec():
 #对链接的处理库
 # 链接就是映射句子到图的语句
 class link_processor():
-	def __init__(self, txt_file='biaoqing.txt', model_file='./fash250.model.bin'):
+	def __init__(self, txt_file='../OCR/biaoqing.txt', model_file='./fash250.model.bin'):
 		self.txt_file = txt_file
 		self.model_file = model_file
 		self.lastNsen = 6

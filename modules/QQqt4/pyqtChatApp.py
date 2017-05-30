@@ -235,7 +235,7 @@ class PyqtChatApp(QSplitter):
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
-    pchat = PyqtChatApp('/media/lsz/MYLINUXLIVE/img/19/')
+    pchat = PyqtChatApp('../OCR/img/20/')
     pchat.show()
     sys.exit(app.exec_())
 
