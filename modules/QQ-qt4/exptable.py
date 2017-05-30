@@ -19,7 +19,6 @@ class Window(QWidget):
 		lo.addWidget(self.table)
 		self.setLayout(lo)
 		self.move(QCursor.pos().x()-100, QCursor.pos().y()-470)
-		# self.setObjectName("window")
 		self.setStyleSheet("QTableWidget{background: #74C5FA;border:2px groove gray;border-radius:10px;padding:2px 4px;}"
 		    "QLabel{background: white;color: blue;border-width: 2px; border-style: solid;border-color: #74C5FA;border-radius:2px}")
 
