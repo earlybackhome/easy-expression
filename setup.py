@@ -17,7 +17,7 @@ log = logging.getLogger(__name__)
 #from modules.OCR import Image2txt
 
 if __name__ == '__main__':
-	dependencies = ['matplotlib', 'cv2', 'jieba', 'pyocr', 'numpy', 'sklearn', 'PIL']
+	dependencies = ['matplotlib', 'cv2', 'jieba', 'pyocr', 'numpy', 'sklearn', 'PIL', 'PyQt4']
 	print('Before we run the core,  we need these package preinstalled\n%s',
 		 dependencies)
 	uninstall = []
