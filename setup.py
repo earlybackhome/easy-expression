@@ -9,7 +9,7 @@ import sys
 import logging
 import os
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger(__name__)
 
 #sys.path.append('modules/')
@@ -31,6 +31,7 @@ if __name__ == '__main__':
 		else:
 			print('successfully imported %s'%package)
 	if len(uninstall) == 0:
+		pdir = os.path.split(__file__)[0]
 		os.chdir('./modules/QQqt4/')
 		os.system('python3  pyqtChatApp.py')
 	else :
