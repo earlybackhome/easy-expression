@@ -22,7 +22,9 @@ scipy
 
 1. 下载[链接](https://pan.baidu.com/s/1hs21ZzI)密码: 4fck
 2. 将其中５个文件放到`Easy-expression/module/DL/`下
-3. `cd ./easy-expression`
+3. 下载[链接](https://pan.baidu.com/s/1mhAlouO)密码: wphv
+4. `cd module/OCR && tar -xjf img.tar.bz /img`将其中的压缩包解压在`Easy-expression/module/OCR/img/`下
+5. `cd ./easy-expression`
 `python3 setup.py`
 
 模块说明
