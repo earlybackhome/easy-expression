@@ -470,8 +470,7 @@ class MsgList(QListWidget):
         # picture list
         mylist = [x.picture for x in  self.links.maxSimTxt(input_txt)]
         self.mylist = mylist
-        mylist = []
-        if len(mylist)<5:
+        if len(mylist)<6:
             self.notice = NoticeWindow('Sorry, no match was found.', self)
             self.notice.show()
             QTimer.singleShot(1000, self.notice.close)
@@ -492,7 +491,7 @@ if __name__=='__main__':
     ml.addTextMsg(u"昨夜小楼又东风，春心泛秋意上心头，恰似故人远来载乡愁，今夜月稀掩朦胧，低声叹呢喃望星空，恰似回首终究一场梦，轻轻叹哀怨...",True)
     ml.addTextMsg(u"With a gentle look on her face, she paused and said,她脸上带着温柔的表情，稍稍停顿了一下，便开始讲话",False)
     ml.addImageMsg('ref/bq.gif',True)
-    # ml.addImageMsg('ref/mt.gif',False)
+    ml.addImageMsg('ref/mt.gif',False)
 
     ml.show()
 
