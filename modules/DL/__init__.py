@@ -1,1 +1,1 @@
-print('sucessfully imported DL')
+print('successfully from %s imported'%__package__)

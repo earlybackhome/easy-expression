@@ -1,1 +1,1 @@
-print('successfully imported %s'%__package__)
+print('successfully from %s imported'%__package__)
