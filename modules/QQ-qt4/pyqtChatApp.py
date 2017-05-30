@@ -66,7 +66,7 @@ class MsgInput(QWidget,QObject):
         self.textEdit = TextEdit(msglist)
         self.textEdit.setMaximumHeight(self.teditHeight)
         self.setMaximumHeight(self.teditHeight+self.btnSize)
-        self.textEdit.setFont(QFont("Times",20,QFont.Normal))
+        self.textEdit.setFont(QFont("Microsoft Yahei",20,QFont.Normal))
         self.textEdit.entered.connect(self.sendText)
         self.textEdit.ctrlentered.connect(self.selectImg)
 

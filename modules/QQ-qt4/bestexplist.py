@@ -18,7 +18,7 @@ class BestWindow(QWidget):
 		self.table.move(10,15)
 		lo.addWidget(self.table)
 		self.setLayout(lo)
-		self.move(QCursor.pos().x()-100, QCursor.pos().y()-470)
+		self.move(listView.x()+200, listView.y()+450)
 		# self.setObjectName("window")
 		self.setStyleSheet("QTableWidget{background: #74C5FA;border:2px groove gray;border-radius:10px;padding:2px 4px;}"
 		    "QLabel{background: white;color: blue;border-width: 2px; border-style: solid;border-color: #74C5FA;border-radius:2px}")
@@ -69,10 +69,10 @@ class MyTable(QTableWidget):
 		self.setShowGrid(False)
 		self.fillTable(path)
 		self.setWindowFlags(Qt.FramelessWindowHint)
-		self.setStyleSheet("QScrollBar{width:10;height:0}")
+		self.setStyleSheet("QScrollBar{width:0;height:0}")
 
 	def fillTable(self, path):
-		self.rowcount = len(self.piclist) // self.columncount + 1
+		self.rowcount = 1
 		self.setEditTriggers(QAbstractItemView.NoEditTriggers)
 		self.setSelectionMode(QAbstractItemView.SingleSelection)
 		self.verticalHeader().setVisible(False)
