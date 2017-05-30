@@ -19,7 +19,6 @@ class BestWindow(QWidget):
 		lo.addWidget(self.table)
 		self.setLayout(lo)
 		self.move(listView.x()+200, listView.y()+450)
-		# self.setObjectName("window")
 		self.setStyleSheet("QTableWidget{background: #74C5FA;border:2px groove gray;border-radius:10px;padding:2px 4px;}"
 		    "QLabel{background: white;color: blue;border-width: 2px; border-style: solid;border-color: #74C5FA;border-radius:2px}")
 
@@ -79,7 +78,7 @@ class MyTable(QTableWidget):
 		self.horizontalHeader().setVisible(False)
 		self.setRowCount(self.rowcount)
 		self.setColumnCount(self.columncount)
-		# self.setShowGrid(False) # hide the edge
+		self.setShowGrid(False) # hide the edge
 
 		count = 0
 		self.imglist = []
