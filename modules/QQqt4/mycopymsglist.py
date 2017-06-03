@@ -4,7 +4,7 @@
 # @Author  : He Liang (helianghit@foxmail.com)
 # @Link    : https://github.com/HeLiangHIT
 
-import os, sys, time
+import os, sys, time, re
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from math import *
@@ -13,6 +13,7 @@ import imghdr
 from bestexplist import BestWindow
 sys.path.append('..')
 from DL import maxSim
+from OCR import Image2txt
 
 
 DEFAULT_HEAD = 'icons/qq.png'
@@ -53,7 +54,7 @@ class NoticeWindow(QWidget):
         self.label.setFont(QFont("Microsoft Yahei",15,QFont.Bold))
         lo.addWidget(self.label)
         self.setLayout(lo)
-        self.move(listView.x()+290, listView.y()+620)
+        self.move(listView.x()+270, listView.y()+590)
         self.setStyleSheet(
             "QLabel{background: red;color: white;border-width: 2px; border-style: solid;border-color: red;border-radius:2px}")
 
@@ -356,10 +357,40 @@ class BubbleImage(QLabel):
 
     def downloadImage(self,b):
         # print 'msg copyed'
-        i = len(os.listdir(self.path)) + 1
+        checked_info = open('../OCR/checked.info', 'a+')
+        checked_info.seek(0)
+        checked_filelist = checked_info.readlines()
+        download_path = '../OCR/img/download/'
+        imgtype = imghdr.what(self.img)
+        i = len(os.listdir(download_path)) + 1
+        img = download_path+'/'+str(i)+'.'+imgtype
+        if not os.path.exists(download_path):
+            os.makedirs(download_path)
         with open(self.img, 'rb') as fp:
-            with open(self.path+'/'+str(i)+'.'+imghdr.what(self.img), 'wb') as f:
+            with open(img, 'wb') as f:
                 f.write(fp.read())
+        with open('../OCR/biaoqing.txt', 'a') as out:
+            if img in checked_filelist or (imgtype != 'jpg' and imgtype != 'jpeg'):
+                print('%s 已存在 或此图片不为JPG', img)
+                return
+            else :
+                checked_info.write(img + '\n')
+            try:
+                    pic_ocr = Image2txt.picture_ocr(img)
+                    txt = pic_ocr.get_crop_txt()
+                    # print('pre: %s', txt)
+                    txt = re.subn(r'[^\w\u4e00-\u9fa5]+','', txt)[0].strip()
+                    # print("after: %s", txt)
+                    write_string = txt + '#' + img+'\n'
+                    out.write(write_string)
+            except AttributeError as e:
+                    pass
+            if not txt:
+                    print('ocr failed %s', '放弃')
+
+            checked_info.close()
+
+
 
     def delTextItem(self,b):
         # print 'msg deleted'
@@ -468,14 +499,16 @@ class MsgList(QListWidget):
     def selectImage(self, input_txt):
         # code to analyse the txt
         # picture list
-        mylist = [x.picture for x in  self.links.maxSimTxt(input_txt)]
-        self.mylist = mylist
-        if len(mylist)<6:
+        maxSimLinks = self.links.maxSimTxt(input_txt)
+
+        if maxSimLinks == None:
             self.notice = NoticeWindow('Sorry, no match was found.', self)
             self.notice.show()
             QTimer.singleShot(1000, self.notice.close)
             return None
         if self.bestexpcalling == False:
+            mylist = [x.picture for x in maxSimLinks]
+            self.mylist = mylist
             self.bestwindow = BestWindow(self, mylist,  self.path)
             self.bestwindow.show()
             self.bestexpcalling = True

@@ -44,7 +44,7 @@ class picture_ocr(object):
 
 	def config(self):
 		self.tool  = pyocr.get_available_tools()[0]
-		self.lang = self.tool.get_available_languages()[2]
+		self.lang = 'chi_sim'
 
 	def _analysis(self):
 		img_gray  = cv2.imread(self.filename, 0)
@@ -133,7 +133,9 @@ class picture_ocr(object):
 if __name__  == '__main__':
 	log.setLevel(logging.INFO)
 	#设置两个路径参数
+
 	Image_dir = os.path.split(__file__)[0] + '/img/'
+	print(Image_dir)
 	out = open('./biaoqing.txt', 'a')
 
 	log.debug('oh ? %s', 'checked.info' not  in os.listdir())

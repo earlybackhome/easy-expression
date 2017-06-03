@@ -10,6 +10,7 @@ from PyQt4.QtGui import *
 from mycopygroupuserlist import GroupUserList
 from mycopymsglist import MsgList
 from flowlayout import FlowLayout
+from exprobot import backEnd
 # from chatterbot import ChatBot
 # from chatterbot.trainers import ChatterBotCorpusTrainer
 
@@ -31,7 +32,7 @@ class TextEdit(QTextEdit,QObject):
         if (e.key() == Qt.Key_Return) and (e.modifiers() == Qt.ControlModifier):
             self.ctrlentered.emit()
         super(TextEdit,self).keyPressEvent(e)
-        if (e.key() == Qt.Key_Return or e.key() == Qt.Key_Enter) and (e.modifiers() != Qt.ControlModifier):
+        if (e.key() == Qt.Key_Return or e.key() == Qt.Key_Enter):
             self.clear()
 
     def mousePressEvent(self, event):
@@ -189,10 +190,10 @@ class PyqtChatApp(QSplitter):
 
     def setDemoUser(self):
         self.ursList.clear()
-        self.ursList.addUser('hello')
-        self.ursList.addUser('world')
+        self.ursList.addUser('hello world')
+        self.ursList.addUser('老坛酸菜牛肉面')
         self.ursList.addGroup('group')
-        self.ursList.addUser('HeLiang',group = 'group')
+        self.ursList.addUser('思吉吉',group = 'group')
         self.ursList.addGroup(u'中文')
         self.ursList.addUser(u'田心吉吉',group = u'中文',head = 'icons/hd_1.png')
 
@@ -206,11 +207,13 @@ class PyqtChatApp(QSplitter):
             self.msgList.expcalling == False
 
 
-
     @pyqtSlot(str)
     def sendTextMsg(self,txt):
         # txt = unicode(txt)
         self.msgList.addTextMsg(txt,False)
+        self.imgget = backEnd(txt)
+        self.imgget.start()
+        self.imgget.finish_signal.connect(self.msgList.addImageMsg)
         # self.msgList.addTextMsg(str(self.chatbot.get_response(txt)), True, self.curUser['head'])
 
     @pyqtSlot(str)
@@ -232,10 +235,12 @@ class PyqtChatApp(QSplitter):
         if self.msgList.bestexpcalling == True:
             self.msgList.bestwindow.close()
 
+        os.system('rm ../OCR/tempimg/*')
+
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
-    pchat = PyqtChatApp('../OCR/img/20/')
+    pchat = PyqtChatApp('../OCR/img/')
     pchat.show()
     sys.exit(app.exec_())
 

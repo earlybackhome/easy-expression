@@ -97,7 +97,12 @@ class MyTable(QTableWidget):
 		self.setStyleSheet("QScrollBar{width:10;height:0}")
 
 	def fillTable(self, path):
-		self.piclist = sorted(os.listdir(path))
+		self.piclist = []
+		self.files = os.listdir(path)
+		print(self.files)
+		for subdir in self.files:
+			for filename in os.listdir(path+subdir):
+				self.piclist.append(subdir+'/'+filename)
 		self.rowcount = len(self.piclist) // self.columncount + 1
 		self.setEditTriggers(QAbstractItemView.NoEditTriggers)
 		self.setSelectionMode(QAbstractItemView.SingleSelection)
@@ -109,6 +114,7 @@ class MyTable(QTableWidget):
 
 		count = 0
 		for picture in self.piclist:
+			print(picture)
 			img = os.path.join(path, picture)
 			self.labels.append(MyLabel(img, self, self.window, self.listView))
 			self.setCellWidget(count//self.columncount, count%self.columncount, self.labels[count])
@@ -128,7 +134,7 @@ class MyTable(QTableWidget):
 
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
-	ex = MyTable('/home/qjy/Desktop/img/19/')
+	ex = MyTable('/home/qjy/Desktop/img/')
 	# ex.paintEvent()
 	ex.show()
 	sys.exit(app.exec_())
