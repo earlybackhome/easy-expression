@@ -48,7 +48,7 @@ class link_processor():
 		self.txt_file = txt_file
 		self.model_file = model_file
 		self.lastNsen = 6
-		with open('/home/ree/data/fashion/attribute.dat', 'rb') as fp:
+		with open('/home/qjy/program/Easy-expression/modules/DL/attribute.dat', 'rb') as fp:
 			import pickle
 			self.attr_weigh= pickle.load(fp)
 		self.load()

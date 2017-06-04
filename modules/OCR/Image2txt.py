@@ -57,7 +57,7 @@ class picture_ocr(object):
 
 	def config(self):
 		self.tool  = pyocr.get_available_tools()[0]
-		self.lang = self.tool.get_available_languages()[2]
+		self.lang = 'chi_sim'
 
 	def _analysis(self):
 		kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3, 3))
@@ -220,7 +220,13 @@ class picture_ocr(object):
 if __name__  == '__main__':
 	log.setLevel(logging.INFO)
 	#设置两个路径参数
+<<<<<<< HEAD
 	Image_dir = os.path.split(__file__)[0] + '/img'
+=======
+
+	Image_dir = os.path.split(__file__)[0] + '/img/'
+	print(Image_dir)
+>>>>>>> c45618d2c84906bc5e384eac3441017fc5e975a4
 	out = open('./biaoqing.txt', 'a')
 
 	log.debug('oh ? %s', 'checked.info' not  in os.listdir())

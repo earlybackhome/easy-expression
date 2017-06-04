@@ -31,7 +31,6 @@ class MyLabel(QLabel):
 		self.window = window
 		self.img = img
 		self.expwid = 100
-		print("error img : %s"%img)
 		pixmap = QPixmap(img)
 		pixmap = pixmap.scaledToWidth(self.expwid)
 		self.setPixmap(pixmap)
@@ -98,7 +97,7 @@ class MyTable(QTableWidget):
 
 	def on_click_del_table(self, row, col):
 		self.listView.expcalling = False
-		print("slef.imglist: %s"%self.imglist, "col: %s"% col)
+		print("self.imglist: %s"%self.imglist, "col: %s"% col)
 		self.listView.addImageMsg(self.imglist[col],  False)
 		self.listView.bestwindow.close()
 
