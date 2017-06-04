@@ -11,8 +11,8 @@ from mycopygroupuserlist import GroupUserList
 from mycopymsglist import MsgList
 from flowlayout import FlowLayout
 from exprobot import backEnd
-# from chatterbot import ChatBot
-# from chatterbot.trainers import ChatterBotCorpusTrainer
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
 DEFAULT_HEAD = 'icons/qq.png'
 
@@ -144,6 +144,17 @@ class MsgInput(QWidget,QObject):
             self.msglist.selectImage(txt)
 
 
+class Back(QThread):
+    send_signal = pyqtSignal(str)
+    def __init__(self, txt, robot):
+        super(Back, self).__init__()
+        self.txt = txt
+        self.robot = robot
+
+    def run(self):
+        self.send_signal.emit(str(self.robot.get_response(self.txt)))
+
+
 class PyqtChatApp(QSplitter):
     """聊天界面，QSplitter用于让界面可以鼠标拖动调节"""
     curUser = {'id':None,'name':None,'head':DEFAULT_HEAD}
@@ -173,9 +184,9 @@ class PyqtChatApp(QSplitter):
         self.msgList.setParent(rSpliter)
         self.msgInput.setParent(rSpliter)
 
-        # self.chatbot = ChatBot("myBot", read_only = True, storage_adapter="chatterbot.storage.JsonFileStorageAdapter")
-        # self.chatbot.set_trainer(ChatterBotCorpusTrainer)
-        # self.chatbot.train("chatterbot.corpus.chinese")
+        self.chatbot = ChatBot("myBot", read_only = True, storage_adapter="chatterbot.storage.JsonFileStorageAdapter")
+        self.chatbot.set_trainer(ChatterBotCorpusTrainer)
+        self.chatbot.train("chatterbot.corpus.chinese")
 
         self.setDemoUser() #模拟添加用户
 
@@ -191,7 +202,7 @@ class PyqtChatApp(QSplitter):
     def setDemoUser(self):
         self.ursList.clear()
         self.ursList.addUser('hello world')
-        self.ursList.addUser('老坛酸菜牛肉面')
+        self.ursList.addUser('表情包助手')
         self.ursList.addGroup('group')
         self.ursList.addUser('思吉吉',group = 'group')
         self.ursList.addGroup(u'中文')
@@ -204,17 +215,25 @@ class PyqtChatApp(QSplitter):
             self.msgList.expcalling = False
         if self.msgList.bestexpcalling == True:
             self.msgList.bestwindow.close()
-            self.msgList.expcalling == False
+            self.msgList.bestexpcalling == False
 
 
     @pyqtSlot(str)
     def sendTextMsg(self,txt):
         # txt = unicode(txt)
         self.msgList.addTextMsg(txt,False)
-        self.imgget = backEnd(txt)
-        self.imgget.start()
-        self.imgget.finish_signal.connect(self.msgList.addImageMsg)
-        # self.msgList.addTextMsg(str(self.chatbot.get_response(txt)), True, self.curUser['head'])
+        if self.curUser['name'] == '表情包助手':
+            self.imgget = backEnd(txt)
+            self.imgget.start()
+            self.imgget.finish_signal.connect(self.msgList.addImageMsg)
+        else:
+            self.robotstart = Back(txt, self.chatbot)
+            self.robotstart.start()
+            self.robotstart.send_signal.connect(self.robotSend)
+            # self.msgList.addTextMsg(str(self.chatbot.get_response(txt)), True, self.curUser['head'])
+
+    def robotSend(self, txt):
+        self.msgList.addTextMsg(txt, True, self.curUser['head'])
 
     @pyqtSlot(str)
     def sendImgMsg(self,img):

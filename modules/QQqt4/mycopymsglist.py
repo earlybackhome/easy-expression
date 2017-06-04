@@ -398,7 +398,6 @@ class BubbleImage(QLabel):
 
     def mouseDoubleClickEvent(self,e):
         from PIL import Image
-        print(self.img)
         im = Image.open(self.img)
         im.show()
 
@@ -506,12 +505,11 @@ class MsgList(QListWidget):
             self.notice.show()
             QTimer.singleShot(1000, self.notice.close)
             return None
-        if self.bestexpcalling == False:
-            mylist = [x.picture for x in maxSimLinks]
-            self.mylist = mylist
-            self.bestwindow = BestWindow(self, mylist,  self.path)
-            self.bestwindow.show()
-            self.bestexpcalling = True
+        mylist = [x.picture for x in maxSimLinks]
+        self.mylist = mylist
+        self.bestwindow = BestWindow(self, mylist,  self.path)
+        self.bestwindow.show()
+        self.bestexpcalling = True
 
 
 

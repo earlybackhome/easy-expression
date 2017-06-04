@@ -9,7 +9,7 @@ class BestWindow(QWidget):
 
 		super(BestWindow, self).__init__()
 		self.listView = listView
-		self.resize(680, 220)
+		self.resize(680, 110)
 		self.setWindowFlags(Qt.FramelessWindowHint)
 		self.setAttribute(Qt.WA_TranslucentBackground)
 		self.setStyleSheet("QScrollBar{width:0;height:0}")
@@ -18,7 +18,7 @@ class BestWindow(QWidget):
 		self.table.move(10,15)
 		lo.addWidget(self.table)
 		self.setLayout(lo)
-		self.move(listView.x()+200, listView.y()+450)
+		self.move(listView.x()+240, listView.y()+530)
 		self.setStyleSheet("QTableWidget{background: #74C5FA;border:2px groove gray;border-radius:10px;padding:2px 4px;}"
 		    "QLabel{background: white;color: blue;border-width: 2px; border-style: solid;border-color: #74C5FA;border-radius:2px}")
 
@@ -30,7 +30,7 @@ class MyLabel(QLabel):
 		self.mytable = mytable
 		self.window = window
 		self.img = img
-		self.expwid = 100
+		self.expwid = 110
 		pixmap = QPixmap(img)
 		pixmap = pixmap.scaledToWidth(self.expwid)
 		self.setPixmap(pixmap)
@@ -56,13 +56,13 @@ class MyTable(QTableWidget):
 
 	def __init__(self, listView, window, bestexplist, path = os.getcwd()):
 		super(MyTable, self).__init__()
-		self.columncount = 5
+		self.columncount = 6
 		self.labels = []
 		self.path = path
 		self.window = window
 		self.listView = listView
 		self.piclist = bestexplist
-		self.setFixedSize(650, 200)
+		self.setFixedSize(670, 120)
 		self.setFrameShape(QFrame.NoFrame)
 		self.setShowGrid(False)
 		self.fillTable(path)
@@ -97,7 +97,6 @@ class MyTable(QTableWidget):
 
 	def on_click_del_table(self, row, col):
 		self.listView.expcalling = False
-		print("self.imglist: %s"%self.imglist, "col: %s"% col)
 		self.listView.addImageMsg(self.imglist[col],  False)
 		self.listView.bestwindow.close()
 
