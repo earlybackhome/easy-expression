@@ -220,13 +220,8 @@ class picture_ocr(object):
 if __name__  == '__main__':
 	log.setLevel(logging.INFO)
 	#设置两个路径参数
-<<<<<<< HEAD
-	Image_dir = os.path.split(__file__)[0] + '/img'
-=======
-
 	Image_dir = os.path.split(__file__)[0] + '/img/'
 	print(Image_dir)
->>>>>>> c45618d2c84906bc5e384eac3441017fc5e975a4
 	out = open('./biaoqing.txt', 'a')
 
 	log.debug('oh ? %s', 'checked.info' not  in os.listdir())
@@ -269,7 +264,7 @@ if __name__  == '__main__':
 			log.debug(write_string)
 			out.write(write_string)
 		count += 1
-		if count > 30:
+		if count > 3:
 			break
 	out.close()
 	checked_info.close()
