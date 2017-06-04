@@ -223,6 +223,7 @@ class PyqtChatApp(QSplitter):
         # txt = unicode(txt)
         self.msgList.addTextMsg(txt,False)
         if self.curUser['name'] == '表情包助手':
+            print(1)
             self.imgget = backEnd(txt)
             self.imgget.start()
             self.imgget.finish_signal.connect(self.msgList.addImageMsg)

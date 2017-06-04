@@ -33,6 +33,6 @@ if __name__ == '__main__':
 	if len(uninstall) == 0:
 		pdir = os.path.split(__file__)[0]
 		os.chdir('./modules/QQqt4/')
-		os.system('python3  pyqtChatApp.py')
+		os.system('python3  init.py')
 	else :
 		print('Please install these packages:\n %s'%uninstall)

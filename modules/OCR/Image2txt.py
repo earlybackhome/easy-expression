@@ -268,3 +268,4 @@ if __name__  == '__main__':
 			break
 	out.close()
 	checked_info.close()
+-

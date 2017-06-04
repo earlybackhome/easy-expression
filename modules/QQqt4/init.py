@@ -19,8 +19,8 @@ class Backend(QThread):
 		self.progess = progess
 
 	def run(self):
-		Image_dir = os.path.split(os.path.split(__file__)[0])[0] + '/OCR/img'
-		print(Image_dir)
+		Image_dir = '../OCR/img/'
+		print(__file__)
 		out = open('../OCR/biaoqing.txt', 'a')
 		checked_info = open('../OCR/checked.info', 'a+')
 		checked_info.seek(0)
@@ -70,12 +70,12 @@ class Backend(QThread):
 				# self.detail.append(info)
 				out.write(write_string)
 			filenum += 1
-			if filenum > 18:
+			if filenum > 2:
 				break
 		self.update_date.emit('此文件夹下所有的图片已经OCR', self.num)
 		out.close()
 		checked_info.close()
-		os.chdir(os.path.split(__file__)[0])
+		os.chdir('../../QQqt4')
 		self.close_signal.emit()
 
 		self.progess.close()
@@ -95,7 +95,7 @@ class Progess(QDialog):
 		selectdir.setFixedSize(self.btnSize,self.btnSize)
 		selectdir.clicked.connect(self.selectDir)
 
-		self.line=QLineEdit(os.path.split(os.path.split(__file__)[0])[0] + '/OCR/img/')
+		self.line=QLineEdit('../OCR/img/')
 		self.detail = QTextEdit('详细信息...')
 		self.detail.setFont(QFont("Microsoft Yahei",13,QFont.Normal))
 		self.detail.NoWrap = True
