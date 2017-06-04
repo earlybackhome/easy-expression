@@ -10,9 +10,10 @@ import pickle
 import re
 
 if __name__ == '__main__':
-    source = '宫颈癌；旅顺口打飞_马'
+    source = '宫颈癌；旅顺口打飞_女马'
     test_dict = {}
     test_dict['_'] = '一'
+    test_dict['女马'] = '妈'
     with open('substitude.dat' , 'wb') as fp:
         pickle.dump(test_dict, fp, 1)
     with open('substitude.dat', 'rb') as fp:

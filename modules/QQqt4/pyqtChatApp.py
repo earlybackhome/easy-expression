@@ -238,4 +238,3 @@ if __name__=='__main__':
     pchat = PyqtChatApp('../OCR/img/20/')
     pchat.show()
     sys.exit(app.exec_())
-
